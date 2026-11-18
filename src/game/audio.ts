@@ -1,6 +1,7 @@
 // Synthesized sound effects and music via Web Audio (no external files).
 let ctx: AudioContext | null = null;
-let master: GainNode, music: GainNode;
+let master: GainNode, music: GainNode, fx: GainNode;
+const vol = { music: 0.7, sfx: 0.8 };
 let timer: ReturnType<typeof setInterval> | null = null;
 let stepIdx = 0;
 
@@ -8,12 +9,18 @@ export function initAudio(muted: boolean) {
   if (!ctx) {
     ctx = new AudioContext();
     master = ctx.createGain(); master.connect(ctx.destination);
-    music = ctx.createGain(); music.gain.value = 0.14; music.connect(master);
+    music = ctx.createGain(); music.gain.value = 0.2 * vol.music; music.connect(master);
+    fx = ctx.createGain(); fx.gain.value = vol.sfx; fx.connect(master);
   }
   master.gain.value = muted ? 0 : 0.7;
   void ctx.resume();
 }
 export function setMuted(m: boolean) { if (master) master.gain.value = m ? 0 : 0.7; }
+export function setVolumes(m: number, s: number) {
+  vol.music = m; vol.sfx = s;
+  if (music) music.gain.value = 0.2 * m;
+  if (fx) fx.gain.value = s;
+}
 
 function tone(f: number, dur: number, type: OscillatorType, vol: number, to?: number, delay = 0, dest?: AudioNode) {
   if (!ctx) return;
@@ -22,7 +29,7 @@ function tone(f: number, dur: number, type: OscillatorType, vol: number, to?: nu
   o.type = type; o.frequency.setValueAtTime(f, t);
   if (to) o.frequency.exponentialRampToValueAtTime(to, t + dur);
   g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
-  o.connect(g); g.connect(dest ?? master); o.start(t); o.stop(t + dur + 0.02);
+  o.connect(g); g.connect(dest ?? fx); o.start(t); o.stop(t + dur + 0.02);
 }
 function noise(dur: number, vol: number) {
   if (!ctx) return;
@@ -30,7 +37,7 @@ function noise(dur: number, vol: number) {
   const d = b.getChannelData(0);
   for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
   const s = ctx.createBufferSource(), g = ctx.createGain();
-  s.buffer = b; g.gain.value = vol; s.connect(g); g.connect(master); s.start();
+  s.buffer = b; g.gain.value = vol; s.connect(g); g.connect(fx); s.start();
 }
 
 export const sfx = {

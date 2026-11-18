@@ -277,7 +277,7 @@ export default function Scene() {
           shadow-mapSize={[1024, 1024]} shadow-camera-left={-6} shadow-camera-right={6} shadow-camera-top={10} shadow-camera-bottom={-10} />
         <mesh position={[0, 24, -170]}><circleGeometry args={[30, 48]} /><meshBasicMaterial color="#ff4fa3" fog={false} /></mesh>
         <Loop /><CameraRig /><Road /><City /><Player /><Obstacles /><Coins /><Particles />
-        <Ready onReady={() => wrap.current?.setAttribute("data-scene-ready", "true")} />
+        <Ready onReady={() => { wrap.current?.setAttribute("data-scene-ready", "true"); useGame.setState({ loaded: true }); }} />
       </Canvas>
     </div>
   );
