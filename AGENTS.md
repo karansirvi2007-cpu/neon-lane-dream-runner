@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Game architecture
+- Game rules (movement, spawning, collisions, scoring) live in `src/game/engine.ts` with no React/three imports; the R3F scene only draws `runtime.game`. Why: rules stay testable and tweakable without touching rendering.
+- Per-frame state lives in `runtime.game`; the zustand store holds only screen/UI/save data (persisted to localStorage). Why: avoids 60fps React re-renders on budget phones.
+- Sounds and music are synthesized with Web Audio in `src/game/audio.ts`. Why: no paid or external assets.
