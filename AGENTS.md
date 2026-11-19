@@ -33,6 +33,3 @@ use the editor.
 - Game rules (movement, spawning, collisions, scoring) live in `src/game/engine.ts` with no React/three imports; the R3F scene only draws `runtime.game`. Why: rules stay testable and tweakable without touching rendering.
 - Per-frame state lives in `runtime.game`; the zustand store holds only screen/UI/save data (persisted to localStorage). Why: avoids 60fps React re-renders on budget phones.
 - Sounds and music are synthesized with Web Audio in `src/game/audio.ts`. Why: no paid or external assets.
-- The standalone itch.io export bundles the existing Scene and GameUI with a separate temporary Vite entry, never the server app. Why: itch.io needs static HTML and relative local assets.
-- Paid runner unlocks must come from verified server entitlements; device saves and coins cannot grant them. Why: localStorage is editable and cannot prove a real payment.
-- Graphics tiers are defined in src/game/quality.ts and saved as UI preferences, without changing engine rules. Why: quality must not change game difficulty.
