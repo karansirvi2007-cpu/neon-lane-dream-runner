@@ -153,8 +153,14 @@
   .overlay { pointer-events: auto; overflow-y: auto; position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.9rem; padding: 2rem; background: color-mix(in oklab, var(--background) 70%, transparent); backdrop-filter: blur(4px); animation: fade-in .25s ease-out; }
   .overlay > .btn-neon { max-width: 20rem; }
   .badge-best { color: var(--gold); border: 1px solid var(--gold); border-radius: 9999px; padding: 0.2rem 1rem; text-shadow: 0 0 10px var(--gold); animation: pulse-glow 1s infinite; }
-  .char-card { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0.8rem; border-radius: var(--radius); background: var(--panel); border: 1.5px solid var(--border); }
-  .char-card-active { border-color: var(--char); box-shadow: 0 0 18px var(--char); }
+  .runner-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; }
+  .char-card { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0 0 0.8rem; overflow: hidden; border-radius: 8px; background: var(--panel); border: 1.5px solid var(--border); min-width: 0; }
+  .char-card-active { border-color: var(--primary); box-shadow: 0 0 18px color-mix(in oklab, var(--primary) 40%, transparent); }
+  .runner-portrait { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+  .runner-price { color: var(--gold); min-height: 1.3rem; font-family: var(--font-display); font-size: .8rem; }
+  .shop-message { border-left: 3px solid var(--gold); padding: .75rem; background: var(--panel); color: var(--gold); }
+  .quality-active { background: var(--primary); color: var(--primary-foreground); }
+  @media (max-width: 600px) { .runner-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .char-swatch { width: 2.4rem; height: 2.4rem; border-radius: 9999px; background: radial-gradient(circle at 35% 35%, var(--foreground), var(--char) 50%); box-shadow: 0 0 14px var(--char); }
 }
 @keyframes pulse-glow { 50% { filter: brightness(1.2); box-shadow: 0 0 30px color-mix(in oklab, var(--secondary) 60%, transparent); } }

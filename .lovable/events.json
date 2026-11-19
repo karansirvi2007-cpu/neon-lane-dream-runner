@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "events": {
+    "project.how_to_play_completed": {
+      "event_schema_version": 1,
+      "description": "A player finishes How to Play by choosing Let's Run.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      }
+    },
+    "project.main_menu_choice": {
+      "event_schema_version": 1,
+      "description": "A player chooses an action on the main menu.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "choice"
+        ],
+        "properties": {
+          "choice": {
+            "type": "string",
+            "enum": [
+              "play",
+              "select",
+              "howto",
+              "settings",
+              "daily_reward"
+            ]
+          }
+        }
+      }
+    },
+    "project.run_entered": {
+      "event_schema_version": 1,
+      "description": "A player starts, restarts or resumes a run from an existing game screen.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source",
+          "kind"
+        ],
+        "properties": {
+          "source": {
+            "type": "string",
+            "enum": [
+              "menu",
+              "select",
+              "howto",
+              "settings",
+              "playing",
+              "paused",
+              "over"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "new",
+              "resume"
+            ]
+          }
+        }
+      }
+    },
+    "project.settings_changed": {
+      "event_schema_version": 1,
+      "description": "A player changes sound, music volume, effects volume or graphics quality.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "setting",
+          "value"
+        ],
+        "properties": {
+          "setting": {
+            "type": "string",
+            "enum": [
+              "sound",
+              "musicVol",
+              "sfxVol",
+              "graphics"
+            ]
+          },
+          "value": {
+            "type": [
+              "boolean",
+              "number",
+              "string"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

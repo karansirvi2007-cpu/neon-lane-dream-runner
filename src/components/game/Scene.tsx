@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { C, LANE_W, runtime, step } from "@/game/engine";
 import { CHARACTERS, useGame } from "@/game/store";
 import { sfx } from "@/game/audio";
+import { GRAPHICS } from "@/game/quality";
 
 const box = new THREE.BoxGeometry(1, 1, 1);
 
@@ -265,18 +266,20 @@ function Ready({ onReady }: { onReady: () => void }) {
 
 export default function Scene() {
   const wrap = useRef<HTMLDivElement>(null);
+  const quality = GRAPHICS[useGame(s => s.graphics)];
   useEffect(() => () => { runtime.game.bursts.length = 0; }, []);
   return (
     <div ref={wrap} className="absolute inset-0">
-      <Canvas shadows dpr={[1, 1.5]} camera={{ fov: 62, position: [0, 3.6, 6.8], near: 0.1, far: 220 }}
+      <Canvas shadows={quality.shadows} dpr={quality.dpr} camera={{ fov: 62, position: [0, 3.6, 6.8], near: 0.1, far: 220 }}
         gl={{ antialias: true, powerPreference: "high-performance" }}>
         <color attach="background" args={["#0b0618"]} />
         <fog attach="fog" args={["#1a0b33", 30, 150]} />
         <hemisphereLight args={["#6a5cff", "#1a0b22", 0.9]} />
-        <directionalLight position={[4, 10, 6]} intensity={1.6} color="#ffd9f5" castShadow
-          shadow-mapSize={[1024, 1024]} shadow-camera-left={-6} shadow-camera-right={6} shadow-camera-top={10} shadow-camera-bottom={-10} />
+        <directionalLight position={[4, 10, 6]} intensity={1.6} color="#ffd9f5" castShadow={quality.shadows}
+          shadow-mapSize={[quality.shadowSize, quality.shadowSize]} shadow-camera-left={-6} shadow-camera-right={6} shadow-camera-top={10} shadow-camera-bottom={-10} />
         <mesh position={[0, 24, -170]}><circleGeometry args={[30, 48]} /><meshBasicMaterial color="#ff4fa3" fog={false} /></mesh>
-        <Loop /><CameraRig /><Road /><City /><Player /><Obstacles /><Coins /><Particles />
+        <Loop /><CameraRig /><Road /><City /><Player /><Obstacles /><Coins />
+        {quality.particles && <Particles />}
         <Ready onReady={() => { wrap.current?.setAttribute("data-scene-ready", "true"); useGame.setState({ loaded: true }); }} />
       </Canvas>
     </div>
