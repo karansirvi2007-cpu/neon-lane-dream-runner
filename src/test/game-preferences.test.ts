@@ -46,6 +46,19 @@ describe("graphics and settings", () => {
     useGame.getState().setPref({ graphics: "high" });
     expect(JSON.parse(localStorage.getItem("neon-rush-save") ?? "{}").graphics).toBe("high");
     expect(window.__lovableEvents?.track).toHaveBeenCalledTimes(1);
-    expect(window.__lovableEvents?.track).toHaveBeenCalledWith("project.settings_changed", { setting: "graphics", value: "high" });
+    expect(window.__lovableEvents?.track).toHaveBeenCalledWith("project.settings_value_changed", { setting: "graphics", value: "high" });
+  });
+  it("serializes sound changes without changing the saved boolean", () => {
+    useGame.getState().toggleMute();
+    expect(useGame.getState().muted).toBe(true);
+    expect(window.__lovableEvents?.track).toHaveBeenCalledWith("project.settings_value_changed", { setting: "sound", value: "false" });
+    useGame.getState().toggleMute();
+    expect(window.__lovableEvents?.track).toHaveBeenCalledWith("project.settings_value_changed", { setting: "sound", value: "true" });
+  });
+  it.each(["musicVol", "sfxVol"] as const)("serializes %s without changing the saved number", setting => {
+    useGame.setState({ [setting]: 0.8 });
+    useGame.getState().setPref({ [setting]: 0.35 });
+    expect(useGame.getState()[setting]).toBe(0.35);
+    expect(window.__lovableEvents?.track).toHaveBeenCalledWith("project.settings_value_changed", { setting, value: "0.35" });
   });
 });

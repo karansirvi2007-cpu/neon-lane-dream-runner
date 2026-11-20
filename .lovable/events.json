@@ -78,9 +78,9 @@
         }
       }
     },
-    "project.settings_changed": {
+    "project.settings_value_changed": {
       "event_schema_version": 1,
-      "description": "A player changes sound, music volume, effects volume or graphics quality.",
+      "description": "A player changes sound, music volume, effects volume or graphics quality; values are serialized as strings.",
       "privacy": {
         "contains_pii": false,
         "purpose": "product_analytics"
@@ -103,11 +103,7 @@
             ]
           },
           "value": {
-            "type": [
-              "boolean",
-              "number",
-              "string"
-            ]
+            "type": "string"
           }
         }
       }

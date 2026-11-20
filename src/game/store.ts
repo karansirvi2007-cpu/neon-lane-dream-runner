@@ -82,7 +82,7 @@ export const useGame = create<State>((set, get) => {
     toggleMute: () => {
       const muted = !get().muted;
       set({ muted }); persist();
-      window.__lovableEvents?.track?.("project.settings_changed", { setting: "sound", value: !muted });
+      window.__lovableEvents?.track?.("project.settings_value_changed", { setting: "sound", value: String(!muted) });
     },
     setPref: (p) => {
       const previous = get();
@@ -90,7 +90,7 @@ export const useGame = create<State>((set, get) => {
       for (const setting of ["musicVol", "sfxVol", "graphics"] as const) {
         const value = p[setting];
         if (value !== undefined && value !== previous[setting]) {
-          window.__lovableEvents?.track?.("project.settings_changed", { setting, value });
+          window.__lovableEvents?.track?.("project.settings_value_changed", { setting, value: String(value) });
         }
       }
     },
