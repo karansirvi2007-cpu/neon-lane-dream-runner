@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const project = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const stage = await mkdtemp(path.join(tmpdir(), "neon-rush-itchio-"));
 await writeFile(path.join(stage, "index.html"), `<!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>NEON RUSH</title><meta name="description" content="NEON RUSH — futuristic 3D endless runner"><link rel="icon" href="./favicon.png"></head><body><div id="root"></div><script type="module" src="./entry.tsx"></script></body></html>`);
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>NEON RUSH</title><meta name="description" content="NEON RUSH — futuristic 3D endless runner"><link rel="icon" href="./favicon.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Rajdhani:wght@500;700&display=swap"></head><body><div id="root"></div><script type="module" src="./entry.tsx"></script></body></html>`);
 await writeFile(path.join(stage, "entry.tsx"), `import React from "react";
 import { createRoot } from "react-dom/client";
 import Scene from "${project}/src/components/game/Scene";
@@ -30,9 +30,13 @@ await writeFile(path.join(out, "UPLOAD-README.txt"), `NEON RUSH — itch.io HTML
 
 Upload this ZIP to itch.io, choose Kind of project: HTML, and select This file will be played in the browser.
 Suggested viewport: 480 x 850, Mobile friendly; allow fullscreen.
+On itch.io create a new project, set Kind of project to HTML, upload this ZIP,
+and check This file will be played in the browser. Save and preview your page.
 Keep index.html and assets together. The game is bundled locally, not an iframe to Lovable.
 Desktop: arrows or WASD, Space to jump, P/Esc to pause. Mobile: swipe.
 Sound starts after a click. Settings includes music/effects volume and High/Low graphics.
+Progress is saved on the current browser/device, not across accounts or devices.
+All gameplay and artwork are bundled; optional Google Fonts use the internet with local font fallbacks.
 Paid runners show INR prices but remain locked: payments have not been activated.
 Lovable analytics calls are included, but itch.io does not inject the Lovable collector; tracking is available only in the Lovable-hosted app.
 Runner portraits are concept artwork; in-game runners use the existing stylized 3D model with corresponding colors.

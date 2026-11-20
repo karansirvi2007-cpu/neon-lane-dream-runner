@@ -33,3 +33,4 @@ use the editor.
 - Game rules (movement, spawning, collisions, scoring) live in `src/game/engine.ts` with no React/three imports; the R3F scene only draws `runtime.game`. Why: rules stay testable and tweakable without touching rendering.
 - Per-frame state lives in `runtime.game`; the zustand store holds only screen/UI/save data (persisted to localStorage). Why: avoids 60fps React re-renders on budget phones.
 - Sounds and music are synthesized with Web Audio in `src/game/audio.ts`. Why: no paid or external assets.
+- itch.io exports use `scripts/export-itchio.mjs` to bundle the existing scene and UI into a temporary static HTML5 package with relative asset paths; never embed the hosted app in an iframe. Why: uploads run independently of Lovable hosting without changing gameplay.

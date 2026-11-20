@@ -1,6 +1,4 @@
-# NEON RUSH updates
-- [ ] Track menu choices, instruction completion, preferences and run entry.
-- [ ] Add futuristic runner images and preserve coin unlocks.
-- [ ] Add ₹99, ₹199 and ₹299 paid runners with verified purchases (requires payment activation).
-- [ ] Improve background music and add High / Low graphics settings.
-- [ ] Export and verify an itch.io ZIP with root index.html.
+# NEON RUSH itch.io delivery
+- [x] Package the existing game with root index.html and relative assets.
+- [x] Verify the exported game on desktop and mobile in an itch.io-style iframe (default Low graphics; High graphics timed out in software rendering).
+- [x] Inspect and deliver the upload-ready ZIP.
